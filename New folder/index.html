@@ -219,7 +219,7 @@
         <div class="menu-item">
             <img src="images/Dosai.jpg" alt="Dosai">
             <h3>Dosai</h3>
-            <p class="price">Rs.15</p>
+            <p class="price">₹15</p>
             <div class="controls">
                 <button onclick="changeQuantity('Dosai', -1)">-</button>
                 <input type="text" id="quantity-Dosai" class="quantity" value="0" readonly>
@@ -231,7 +231,7 @@
         <div class="menu-item">
             <img src="images/OnionDosai.jpg" alt="Onion Dosai">
             <h3>Onion Dosai</h3>
-            <p class="price">Rs.20</p>
+            <p class="price">₹20</p>
             <div class="controls">
                 <button onclick="changeQuantity('Onion Dosai', -1)">-</button>
                 <input type="text" id="quantity-OnionDosai" class="quantity" value="0" readonly>
@@ -243,7 +243,7 @@
         <div class="menu-item">
             <img src="images/Egg-Dosa-2-1.jpg" alt="Egg Dosai">
             <h3>Egg Dosai</h3>
-            <p class="price">Rs.25</p>
+            <p class="price">₹25</p>
             <div class="controls">
                 <button onclick="changeQuantity('Egg Dosai', -1)">-</button>
                 <input type="text" id="quantity-EggDosai" class="quantity" value="0" readonly>
@@ -255,7 +255,7 @@
         <div class="menu-item">
             <img src="images/idli-recipe.jpg" alt="Idli">
             <h3>Idli</h3>
-            <p class="price">Rs.7.5</p>
+            <p class="price">₹7.5</p>
             <div class="controls">
                 <button onclick="changeQuantity('Idli', -1)">-</button>
                 <input type="text" id="quantity-Idli" class="quantity" value="0" readonly>
@@ -265,9 +265,9 @@
 
         <!-- Chapati -->
         <div class="menu-item">
-            <img src="images/Chapati.jpg" alt="Chapati">
+            <img src="images/chapati.jpg" alt="Chapati">
             <h3>Chapati</h3>
-            <p class="price">Rs.15</p>
+            <p class="price">₹15</p>
             <div class="controls">
                 <button onclick="changeQuantity('Chapati', -1)">-</button>
                 <input type="text" id="quantity-Chapati" class="quantity" value="0" readonly>
@@ -279,7 +279,7 @@
         <div class="menu-item">
             <img src="images/sevai.jpg" alt="Seavai">
             <h3>Seavai</h3>
-            <p class="price">₹80</p>
+            <p class="price">₹30</p>
             <div class="controls">
                 <button onclick="changeQuantity('Seavai', -1)">-</button>
                 <input type="text" id="quantity-Seavai" class="quantity" value="0" readonly>
@@ -318,7 +318,7 @@
         }
 
         function updateCart(item, quantity) {
-            let price = parseInt(document.querySelector(`#quantity-${item.replace(' ', '')}`).parentNode.previousElementSibling.innerText.replace('₹', ''));
+            let price = parseFloat(document.querySelector(`#quantity-${item.replace(' ', '')}`).parentNode.previousElementSibling.innerText.replace('₹', '').trim());
 
             if (quantity > 0) {
                 if (!cart[item]) {
@@ -378,7 +378,7 @@
         }
 
         function shareCartOnWhatsApp() {
-            let cartMessage = `Order from Little Bites:\n\n`;
+            let cartMessage = `New Order:\n\n`;
 
             for (let item in cart) {
                 cartMessage += `${item} x ${cart[item].quantity} - ₹${cart[item].price * cart[item].quantity}\n`;
