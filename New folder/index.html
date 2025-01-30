@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Little Bites - Order Food</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #000000;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #080808;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header img {
+            height: 50px;
+            margin-right: 10px;
+        }
+
+        .menu {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .menu-item {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .menu-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Menu Item Images */
+        .menu-item img {
+            width: 100%; /* Full width within the container */
+            height: 200px; /* Set a fixed height for consistency */
+            object-fit: cover; /* Ensures the image covers the area without stretching */
+            border-radius: 8px;
+        }
+
+        .menu-item h3 {
+            margin: 15px 0;
+            color: #333;
+        }
+
+        .price {
+            font-size: 18px;
+            color: #0c0b0b;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .controls button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .controls button:hover {
+            background-color: #e5533d;
+        }
+
+        .quantity {
+            width: 30px;
+            text-align: center;
+            font-size: 16px;
+        }
+
+        .cart {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #ff6347;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        #cart-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        #cart-modal .cart-container {
+            background-color: #fff;
+            color: #333;
+            width: 400px;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .cart-container h2 {
+            margin-top: 0;
+            text-align: center;
+            color: #ff6347;
+        }
+
+        .cart-items {
+            list-style: none;
+            padding: 0;
+        }
+
+        .cart-items li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .cart-items .item-name {
+            font-weight: bold;
+        }
+
+        .cart-items .item-controls {
+            display: flex;
+            gap: 5px;
+        }
+
+        .cart-items button {
+            background-color: #ff6347;
+            color: white;
+            border: none;
+            padding: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .whatsapp-btn {
+            background-color: #25D366;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            font-size: 18px;
+            margin-top: 15px;
+            text-align: center;
+            width: 100%;
+        }
+
+        .whatsapp-btn:hover {
+            background-color: #128C7E;
+        }
+
+        .close-btn {
+            background-color: red;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            border: none;
+            display: inline-block;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .close-btn:hover {
+            background-color: #c82333;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <img src="images/logo.jpg" alt="Company Logo"> <!-- Replace with your logo URL -->
+        <span>Little Bites - Order Food</span>
+    </header>
+
+    <div class="menu">
+        <!-- Dosai -->
+        <div class="menu-item">
+            <img src="images/Dosai.jpg" alt="Dosai">
+            <h3>Dosai</h3>
+            <p class="price">Rs.15</p>
+            <div class="controls">
+                <button onclick="changeQuantity('Dosai', -1)">-</button>
+                <input type="text" id="quantity-Dosai" class="quantity" value="0" readonly>
+                <button onclick="changeQuantity('Dosai', 1)">+</button>
+            </div>
+        </div>
+
+        <!-- Onion Dosai -->
+        <div class="menu-item">
+            <img src="images/OnionDosai.jpg" alt="Onion Dosai">
+            <h3>Onion Dosai</h3>
+            <p class="price">Rs.20</p>
+            <div class="controls">
+                <button onclick="changeQuantity('Onion Dosai', -1)">-</button>
+                <input type="text" id="quantity-OnionDosai" class="quantity" value="0" readonly>
+                <button onclick="changeQuantity('Onion Dosai', 1)">+</button>
+            </div>
+        </div>
+
+        <!-- Egg Dosai -->
+        <div class="menu-item">
+            <img src="images/Egg-Dosa-2-1.jpg" alt="Egg Dosai">
+            <h3>Egg Dosai</h3>
+            <p class="price">Rs.25</p>
+            <div class="controls">
+                <button onclick="changeQuantity('Egg Dosai', -1)">-</button>
+                <input type="text" id="quantity-EggDosai" class="quantity" value="0" readonly>
+                <button onclick="changeQuantity('Egg Dosai', 1)">+</button>
+            </div>
+        </div>
+
+        <!-- Idli -->
+        <div class="menu-item">
+            <img src="images/idli-recipe.jpg" alt="Idli">
+            <h3>Idli</h3>
+            <p class="price">Rs.7.5</p>
+            <div class="controls">
+                <button onclick="changeQuantity('Idli', -1)">-</button>
+                <input type="text" id="quantity-Idli" class="quantity" value="0" readonly>
+                <button onclick="changeQuantity('Idli', 1)">+</button>
+            </div>
+        </div>
+
+        <!-- Chapati -->
+        <div class="menu-item">
+            <img src="images/Chapati.jpg" alt="Chapati">
+            <h3>Chapati</h3>
+            <p class="price">Rs.15</p>
+            <div class="controls">
+                <button onclick="changeQuantity('Chapati', -1)">-</button>
+                <input type="text" id="quantity-Chapati" class="quantity" value="0" readonly>
+                <button onclick="changeQuantity('Chapati', 1)">+</button>
+            </div>
+        </div>
+
+        <!-- Noodles -->
+        <div class="menu-item">
+            <img src="images/sevai.jpg" alt="Seavai">
+            <h3>Seavai</h3>
+            <p class="price">₹80</p>
+            <div class="controls">
+                <button onclick="changeQuantity('Seavai', -1)">-</button>
+                <input type="text" id="quantity-Seavai" class="quantity" value="0" readonly>
+                <button onclick="changeQuantity('Seavai', 1)">+</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="cart" onclick="toggleCart()">Cart <span id="cart-count">0</span></div>
+
+    <div id="cart-modal">
+        <div class="cart-container">
+            <h2>Your Cart</h2>
+            <ul id="cart-list" class="cart-items"></ul>
+            <p id="gross-total" style="font-size: 18px; font-weight: bold; text-align: center;"></p>
+            <button class="whatsapp-btn" onclick="shareCartOnWhatsApp()">Share Order On WhatsApp</button>
+            <button class="close-btn" onclick="toggleCart()">Close</button>
+        </div>
+    </div>
+
+    <script>
+        let cart = {};
+        let cartCount = 0;
+        let grossTotal = 0;
+
+        function changeQuantity(item, increment) {
+            let quantityInput = document.getElementById('quantity-' + item.replace(' ', ''));
+
+            let currentQuantity = parseInt(quantityInput.value);
+            let newQuantity = currentQuantity + increment;
+
+            if (newQuantity >= 0) {
+                quantityInput.value = newQuantity;
+                updateCart(item, newQuantity);
+            }
+        }
+
+        function updateCart(item, quantity) {
+            let price = parseInt(document.querySelector(`#quantity-${item.replace(' ', '')}`).parentNode.previousElementSibling.innerText.replace('₹', ''));
+
+            if (quantity > 0) {
+                if (!cart[item]) {
+                    cart[item] = { quantity: 0, price: price };
+                }
+                cart[item].quantity = quantity;
+            } else {
+                delete cart[item];
+            }
+
+            calculateCart();
+        }
+
+        function calculateCart() {
+            cartCount = 0;
+            grossTotal = 0;
+            for (let item in cart) {
+                cartCount += cart[item].quantity;
+                grossTotal += cart[item].quantity * cart[item].price;
+            }
+            document.getElementById('cart-count').innerText = cartCount;
+            updateCartModal();
+        }
+
+        function updateCartModal() {
+            const cartList = document.getElementById('cart-list');
+            cartList.innerHTML = '';
+
+            if (cartCount === 0) {
+                cartList.innerHTML = "<li>Your cart is empty</li>";
+            } else {
+                for (let item in cart) {
+                    let li = document.createElement('li');
+                    li.innerHTML = `${item} x ${cart[item].quantity} - ₹${cart[item].price * cart[item].quantity}
+                    <div class="item-controls">
+                        <button onclick="removeItem('${item}')">Remove</button>
+                    </div>`;
+                    cartList.appendChild(li);
+                }
+            }
+
+            document.getElementById('gross-total').innerText = `Total: ₹${grossTotal}`;
+        }
+
+        function removeItem(item) {
+            delete cart[item];
+            calculateCart();
+        }
+
+        function toggleCart() {
+            const cartModal = document.getElementById('cart-modal');
+            if (cartModal.style.display === 'none' || !cartModal.style.display) {
+                cartModal.style.display = 'flex';
+            } else {
+                cartModal.style.display = 'none';
+            }
+        }
+
+        function shareCartOnWhatsApp() {
+            let cartMessage = `Order from Little Bites:\n\n`;
+
+            for (let item in cart) {
+                cartMessage += `${item} x ${cart[item].quantity} - ₹${cart[item].price * cart[item].quantity}\n`;
+            }
+
+            cartMessage += `\nTotal: ₹${grossTotal}`;
+
+            let whatsappUrl = `https://wa.me/+919500996515?text=${encodeURIComponent(cartMessage)}`;
+
+            // Open WhatsApp
+            window.open(whatsappUrl, '_blank');
+        }
+
+        // Hide cart modal initially
+        document.getElementById('cart-modal').style.display = 'none';
+    </script>
+</body>
+</html>
